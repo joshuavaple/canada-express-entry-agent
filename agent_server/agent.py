@@ -43,38 +43,39 @@ from databricks.sdk.runtime import dbutils
 logger = logging.getLogger(__name__)
 mlflow.langchain.autolog()
 logging.getLogger("mlflow.utils.autologging_utils").setLevel(logging.ERROR)
-# litellm.suppress_debug_info = True
-sp_workspace_client = WorkspaceClient()
-
-
 mlflow.langchain.autolog()
 
 
-# TODO: set the following in the server environment variables:
+# TODO: set the following in the server environment variables to init the LLM client class
 # os.environ["AZURE_OPENAI_ENDPOINT"] = AZURE_OPENAI_ENDPOINT
 # os.environ["AZURE_OPENAI_API_KEY"] = AZURE_OPENAI_API_KEY
-# then this client class will be init correctly
-# to test, use databricks secret scope
-# AZURE_OPENAI_ENDPOINT = dbutils.secrets.get(scope="demo-scope", key="azure_openai_endpoint")
-# AZURE_OPENAI_API_KEY = dbutils.secrets.get(scope="demo-scope", key="azure_openai_api_key")
-AZURE_OPENAI_ENDPOINT = os.environ.get("AZURE_OPENAI_ENDPOINT")
-AZURE_OPENAI_API_KEY = os.environ.get("AZURE_OPENAI_API_KEY")
-if not AZURE_OPENAI_ENDPOINT:
-    sp_workspace_client
-    AZURE_OPENAI_ENDPOINT = sp_workspace_client.secrets.get_secret(
-        scope="demo-scope", 
-        key="azure_openai_endpoint"
-    ).value
-    AZURE_OPENAI_API_KEY = sp_workspace_client.secrets.get_secret(
-        scope="demo-scope", 
-        key="azure_openai_api_key"
-    ).value
 
+# using dbutils:
+AZURE_OPENAI_ENDPOINT = dbutils.secrets.get(scope="demo-scope", key="azure_openai_endpoint")
+AZURE_OPENAI_API_KEY = dbutils.secrets.get(scope="demo-scope", key="azure_openai_api_key")
+
+# [NOT-WORKING] using workspace client:
+# sp_workspace_client = WorkspaceClient(profile="joshuale-common")
+# AZURE_OPENAI_API_KEY = sp_workspace_client.secrets.get_secret(
+#     scope="demo-scope", 
+#     key="azure_openai_api_key"
+# ).value
+# AZURE_OPENAI_ENDPOINT = sp_workspace_client.secrets.get_secret(
+#     scope="demo-scope", 
+#     key="azure_openai_endpoint"
+# ).value
+
+if not AZURE_OPENAI_ENDPOINT or not AZURE_OPENAI_API_KEY:
+    raise ValueError("Azure OpenAI endpoint and API key must be configured")
+
+os.environ["AZURE_OPENAI_API_KEY"] = AZURE_OPENAI_API_KEY
+os.environ["AZURE_OPENAI_ENDPOINT"] = AZURE_OPENAI_ENDPOINT
+
+# set other parameters for AzureChatOpenAI
 os.environ["AZURE_OPENAI_CHAT_DEPLOYMENT_NAME"] = "gpt-4o"
 os.environ["AZURE_OPENAI_API_VERSION"] = "2024-10-21"
 os.environ["MODEL_VERSION"] = "2024-11-20"
-os.environ["AZURE_OPENAI_API_KEY"] = AZURE_OPENAI_API_KEY
-os.environ["AZURE_OPENAI_ENDPOINT"] = AZURE_OPENAI_ENDPOINT
+
 
 llm_client = AzureChatOpenAI(
     azure_deployment=os.environ.get("AZURE_OPENAI_CHAT_DEPLOYMENT_NAME"),
