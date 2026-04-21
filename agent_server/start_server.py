@@ -7,7 +7,8 @@ from mlflow.genai.agent_server import AgentServer, setup_mlflow_git_based_versio
 load_dotenv(dotenv_path=Path(__file__).parent.parent / ".env", override=True)
 
 # Need to import the agent to register the functions with the server
-import agent_server.agent
+# import agent_server.agent
+import agent_server.agent_databricks
 
 agent_server = AgentServer("ResponsesAgent", enable_chat_proxy=True)
 
