@@ -40,3 +40,4 @@ default-groups = ["dev", "setup"]
 
 [project.scripts]
 start-server = "agent_server.start_server:main"
+start-app = "scripts.start_app:main"
