@@ -10,6 +10,10 @@
 - [ ] Customize the frontend
 - [ ] turn off the frontend cloning behavior in the start-app script
 - [ ] how to run frontend and backend separately in 2 terminal sessions and they can still work together?
+- [ ] add `preflight.py` and update the `pyproject.toml` for prechecks before deployment to Databricks apps.
+- [ ] add `databricks.yml` and update the following fields:
+      - Compulsory: `experiment_id`, `host`
+      - Optional: bundle name and app name
 
 # Manual local development loop setup
 1. Set up your local environment 
@@ -41,7 +45,7 @@
          -H "Content-Type: application/json" \
          -d '{ "input": [{ "role": "user", "content": "hi" }] }'
          ```
-6. Advanced server options:
+7. Advanced server options:
    ```bash
    uv run start-server --reload   # hot-reload the server on code changes
    uv run start-server --port 8001 # change the port the server listens on (e.g., when 8000 is occupied and cannot be killed)
