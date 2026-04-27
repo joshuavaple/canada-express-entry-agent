@@ -51,3 +51,6 @@
    uv run start-server --port 8001 # change the port the server listens on (e.g., when 8000 is occupied and cannot be killed)
    uv run start-server --workers 4 # run the server with multiple workers
    ```
+8. Mitigation for "error downloading Terraform" during bundle deployments: update the Databricks CLI
+   https://github.com/databricks/cli/issues/5022
+   
