@@ -14,6 +14,7 @@
 - [ ] add `databricks.yml` and update the following fields:
       - Compulsory: `experiment_id`, `host`
       - Optional: bundle name and app name
+      - Compulsory: targets/<env>/workspace/root_path: to /Workspace/... (to resolve missing files when deploying to default home page)
 
 # Manual local development loop setup
 1. Set up your local environment 
