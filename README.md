@@ -14,7 +14,8 @@
 # Manual local development loop setup
 1. Set up your local environment 
     - [x] Install uv (python package manager), 
-    - [x] nvm (node version manager), 
+    - [x] nvm (node version manager),
+        - [x] If facing error `nvm: command not found` after installation, refer to `https://www.squash.io/how-to-solve-nvm-command-not-found-during-node-version-manager-installation/`
     - [x] and the Databricks CLI
 2. Set up local authentication to Databricks
     - [x] Option 1: OAuth via Databricks CLI (Recommended) (.env set up)
