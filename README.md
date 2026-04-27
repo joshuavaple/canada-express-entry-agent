@@ -11,6 +11,7 @@
 - [ ] turn off the frontend cloning behavior in the start-app script
 - [ ] how to run frontend and backend separately in 2 terminal sessions and they can still work together?
 - [ ] add `preflight.py` and update the `pyproject.toml` for prechecks before deployment to Databricks apps.
+- [ ] separate the `app.yml` content out from the main DAB so that the valueFrom: "experiment" keyword can be resolved (this is the app.yml specific keyword)
 - [ ] add `databricks.yml` and update the following fields:
       - Compulsory: `experiment_id`, `host`
       - Optional: bundle name and app name
@@ -69,4 +70,4 @@
    ```
 8. Mitigation for "error downloading Terraform" during bundle deployments: update the Databricks CLI
    https://github.com/databricks/cli/issues/5022
-   
+9. With the UI template in the same root folder, the app can be deployed to databricks apps using the DAB file
