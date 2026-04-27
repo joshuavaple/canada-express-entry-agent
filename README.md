@@ -26,3 +26,24 @@
     - [x] use `uv run start-app` => runs `scripts/start_app.py`. This will clone the chat UI folder if it does not exist yet.
 5. Run only the frontend, e.g., to customize the UI
     - [x] in `e2e-chatbot-app-next`, add the minimal `DATABRICKS_CONFIG_PROFILE` in a `.env` file. Use the same profile you used during the initial auth setup in step (2)
+6. Run only the backend, e.g., to test the agent server's responses
+    - [x] use `uv run start-server` => run `agent_server/start_server.py` on the default port 8000
+    - [x] then, use curl to call the agent:
+       - Example streaming request:
+         ```bash
+         curl -X POST http://localhost:8000/invocations \
+         -H "Content-Type: application/json" \
+         -d '{ "input": [{ "role": "user", "content": "hi" }], "stream": true }'
+         ```
+       - Example non-streaming request:
+         ```bash
+         curl -X POST http://localhost:8000/invocations  \
+         -H "Content-Type: application/json" \
+         -d '{ "input": [{ "role": "user", "content": "hi" }] }'
+         ```
+6. Advanced server options:
+   ```bash
+   uv run start-server --reload   # hot-reload the server on code changes
+   uv run start-server --port 8001 # change the port the server listens on (e.g., when 8000 is occupied and cannot be killed)
+   uv run start-server --workers 4 # run the server with multiple workers
+   ```
