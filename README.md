@@ -15,6 +15,21 @@
       - Compulsory: `experiment_id`, `host`
       - Optional: bundle name and app name
       - Compulsory: targets/<env>/workspace/root_path: to /Workspace/... (to resolve missing files when deploying to default home page)
+      - If deployment shows error below, add the policy id to the field `budget_policy_id` inside `databricks.yml` (same level as the apps/<bundle_name>/name) (to check why)
+        ```
+        Deploying resources...
+        Error: terraform apply: exit status 1
+        
+        Error: Provider produced inconsistent result after apply
+        
+        When applying changes to databricks_app.agent_langgraph_express_entry,
+        provider "provider[\"registry.terraform.io/databricks/databricks\"]" produced
+        an unexpected new value: .budget_policy_id: was null, but now
+        cty.StringVal("b462f393-10df-442a-b49a-9a928118fe29").
+        
+        This is a bug in the provider, which should be reported in the provider's own
+        issue tracker.
+        ```
 
 # Manual local development loop setup
 1. Set up your local environment 
